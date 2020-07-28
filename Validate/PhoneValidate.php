@@ -28,36 +28,39 @@ class PhoneValidate extends Validate
         $sql = $sql . ')';
         $query = $db->prepare($sql);
         $query->execute($newCountArray);
-        $result = $query->fetchAll(PDO::FETCH_GROUP|PDO::FETCH_ASSOC);
+        $result = $query->fetchAll(PDO::FETCH_GROUP | PDO::FETCH_ASSOC);
         $isCodes = [];
         foreach ($result as $key => $item) {
             $isCodes[] = $key;
         }
         $diff = array_diff($codes, $isCodes);
-        if(count($diff) == 0){
+        if (count($diff) == 0) {
             return true;
         }
-        $this->setOneError('Country Code', [ 'exist' => 'does not exist this country code']);
+        $this->setOneError('Country Code', ['exist' => 'does not exist this code country ']);
         return false;
     }
 
-    public function requiredCount($count){
-        if(trim($count) == ''){
-            $this->setOneError('Count', ['required' => 'does not exist this country code']);
+    public function requiredCount($count)
+    {
+        if (trim($count) == '') {
+            $this->setOneError('Count', ['required' => 'does not exist this code country ']);
             return false;
         }
     }
 
-    public function intCount($count){
-        if(!is_int($count)){
-            $this->setOneError('Count', ['int' => 'this field should be int']);
+    public function intCount($count)
+    {
+        if (!is_int($count)) {
+            $this->setOneError('Count', ['int' => 'this field should not be int']);
             return false;
         }
     }
 
-    public function isZero($count){
-        if($count === 0){
-            $this->setOneError('Count', ['zero' => 'this field should be zero']);
+    public function isZero($count)
+    {
+        if ($count === 0) {
+            $this->setOneError('Count', ['zero' => 'this field should not be zero']);
             return false;
         }
     }
